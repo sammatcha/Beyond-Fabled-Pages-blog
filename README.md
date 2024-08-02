@@ -60,10 +60,24 @@ All commands are run from the root of the project, from a terminal:
 # TroubleShooting
 ## Image not rendering issue
  added '?url' in the image import
-   - image was placed in src directory and not public
+   - image was placed in src directory and not public<br/>
+
+Page refresh / render shows mobile nav icon when it shouldn't when clicking through nav items
+   - changed `client:load ` to `client:only="react"` in the Nav component in main-layout.astro file<br/>
+
+Page refresh looks clunky
+   - Import and add the <ViewTransitions /> component to main-layout.astro file 
+  
+ 
+
+
 
 # Resources
 Feel free to check [our documentation](https://docs.astro.build)
+
+View Transitions [here](https://docs.astro.build/en/guides/view-transitions/#full-site-view-transitions-spa-mode)
+
+Client directives [here](https://docs.astro.build/en/reference/directives-reference/#client-directives)
 
 ## Credits
 - Image created using Canva.
