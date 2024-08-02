@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useMediaQuery } from "../../utils/useMediaQuery"
 import {motion} from 'framer-motion'
+import React from "react"
 
 
 const navMotion = {
@@ -64,7 +65,7 @@ export default function Nav(){
             </div>
             )}
             {toggled && !matches && (
-                <div className="fixed flex bg-white w-full h-screen flex-col bottom-0 left-0 items-center justify-center z-50">
+                <div className="fixed flex bg-white w-full h-full flex-col top-0 left-0 items-center justify-center z-40">
                     {links.map((link)=> (
                         <a 
                         key={link.id}
