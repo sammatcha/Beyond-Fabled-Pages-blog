@@ -68,7 +68,14 @@ Page refresh / render shows mobile nav icon when it shouldn't when clicking thro
 Page refresh looks clunky
    - Import and add the <ViewTransitions /> component to main-layout.astro file 
   
- 
+ ## Sanity CLI not working
+ Sanity would not create when using quick start installation.
+
+```
+npx sanity@latest logout && npm create sanity@latest -- --project cw1h8gpf --dataset production --template clean
+```
+
+
 
 
 

@@ -1,0 +1,31 @@
+<!-- ---
+import MainLayout from "../../layouts/main-layout.astro";
+import {getCollection} from "astro:content";
+import {getPosts} from "../../sanity/api"
+// import type Slug from "./pages/posts/[slug].astro";
+import imageUrlBuilder from '@sanity/image-url';
+import {urlFor} from '../../helpers/imageHelper';
+import type { imageConfig } from "astro:assets";
+import type { categoryType } from "../../sanity/schemaTypes/categoryType";
+
+// get post from getPosts api
+const posts = await getPosts();
+// console.log("index getPosts:", posts);
+
+//Filter funsies
+const funsiePost = posts.filter(posts => posts.categories === "funsies")
+
+---
+
+<MainLayout>
+  <section>
+ {funsiePost.map((post) => (
+  <a href={`/posts/${post.slug}`}>
+    <p>{post.title}</p>
+    {post.mainImage &&(
+    <img src={urlFor(post.mainImage)}/>
+    )}
+  </a>
+ ))}
+  </section>
+</MainLayout> -->

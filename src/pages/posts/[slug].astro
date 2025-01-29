@@ -1,0 +1,43 @@
+<!-- ---
+import type { GetStaticPaths } from "astro";
+import type { SanityDocument } from "@sanity/client";
+import { loadQuery } from "../../sanity/lib/load-query";
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/main-layout.astro";
+import {getPosts} from "../../sanity/api"
+import { PortableText } from "astro-portabletext";
+
+export const prerender = true
+
+export async function getStaticPaths() {
+    const posts = await getPosts();
+    const paths = posts.map((post) => ({
+            params: {
+                slug: post.slug
+            },
+            props: {
+                title: post.title,
+                body: post.body,
+                image: post.image
+            }
+    }));
+    return paths;
+}
+const {title, body} = Astro.props;
+---
+
+<MainLayout>
+  {title}
+  <PortableText value={body}
+  components={{
+    type:{
+        image: ({value}) => (
+            <img 
+            src={value.asset.url}
+            alt = {value.alt || "Blog Image"}
+            />
+        ),
+    },
+  }}
+  />
+</MainLayout> -->
