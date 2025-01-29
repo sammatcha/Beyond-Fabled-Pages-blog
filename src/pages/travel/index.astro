@@ -1,0 +1,20 @@
+---
+import MainLayout from "../../layouts/main-layout.astro";
+import {getPosts} from "../../sanity/api"
+
+const title = "travel Page"
+const posts = await getPosts();
+const travelPost = posts.filter(post => post.categories == "travel");
+---
+<MainLayout>
+    <section>
+        <hi>{title}</hi>
+        <ul>
+            {travelPost.map((post) => (
+                <a href={post.mainImage}>
+                    {post.title}
+                </a>
+            ))}
+        </ul>
+    </section>
+</MainLayout>

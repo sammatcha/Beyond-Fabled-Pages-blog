@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { useMediaQuery } from "../../utils/useMediaQuery"
+import { useMediaQuery } from "../utils/useMediaQuery"
 import {motion} from 'framer-motion'
 import React from "react"
+import { ChevronDownIcon } from "@heroicons/react/20/solid"
 
 
 const navMotion = {
@@ -26,11 +27,30 @@ const navMotion = {
     {id:1, name:'travel', href:'/travel'},
     {id:2, name:'fp', href:'/'},
     {id:3, name:'games', href:'/games'},
-    {id:4, name:'funsies', href:'/funsies'},
+    {id:4, name:'funsies', href:'/funsies',
+      options: [
+        {label: 'TCG', href:'/funsies/tcg'},
+        {label: 'TCG', href:'/funsies/tcg'},
+        {label: 'TCG', href:'/funsies/tcg'},
+      ]
+    
+    },
   ]
 
 export default function Nav(){
-    const [toggled, setToggled] = useState(false)
+    const [toggled, setToggled] = useState(false);
+    const [dropDown, setDropDown] = useState(false);
+  
+    const handleMouseEnter = () =>{
+      setDropDown(true);
+    }
+    const handleMouseLeave = () =>{
+      setDropDown(false);
+    }
+
+    const handleOnClick = () => {
+      if (!matches) setDropDown(!dropDown)
+    }
     const matches = useMediaQuery('(min-width: 1280px)')
     return(
         <nav className="container relative mx-8 pt-5 flex justify-center items-center gap-5 lg:pt-12 pb-6 font-medium md:mx-16 lg:mx-32 lg:mb-16">
@@ -46,17 +66,41 @@ export default function Nav(){
             </svg>
             {matches  ? (
                 <div className="flex gap-5">
+           
             {links.map((link)=> (
                 <a
                 key={link.id}
                 href = {link.href}
-                className={`font-robotoMono ${link.id ===2 ? 'font-vujahdayScript': ''}`}>
-                    {link.name}
+                className={`font-robotoMono ${link.id === 2 ? 'font-vujahdayScript': ''}`}
+
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                >
+                {link.name}
+                {/* subcategory drop down menu */}
+            {link.options && dropDown && (
+              <div className="absolute bg-transparent shadow-xl z-50">
+              
+            {link.options.map((option, index) => (
+              <a
+                key = {index}
+                href= {option.href}
+                className="block relative z-20 p-20"
+              >
+              {option.label}
+              </a>
+            ))}
+            
+            </div>
+          )}
                 </a>
 
             ))}
-            </div>
-        ): (
+
+            
+          </div>
+
+        ) : (
             
             <div onClick={()=>setToggled(!toggled)} className="space-y-1.5 z-50 cursor-pointer">
                 <motion.span animate={{rotateZ:toggled ? 45:0, y:toggled ? 8:0}} className="block h-0.5 w-8 bg-black"></motion.span>
@@ -70,7 +114,7 @@ export default function Nav(){
                         <a 
                         key={link.id}
                         href={link.href}
-                        className={`font-robotoMono ${link.id ===2 ? 'font-vujahdayScript': ''}`}>
+                        className={`font-robotoMono ${link.id === 2 ? 'font-vujahdayScript': ''}`}>
                           {link.name}
                         </a>
                     ))}
