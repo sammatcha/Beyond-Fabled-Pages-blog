@@ -1,43 +1,31 @@
-<!-- ---
-import type { GetStaticPaths } from "astro";
-import type { SanityDocument } from "@sanity/client";
-import { loadQuery } from "../../sanity/lib/load-query";
-import { getCollection } from "astro:content";
+---
 import MainLayout from "../../layouts/main-layout.astro";
-import {getPosts} from "../../sanity/api"
-import { PortableText } from "astro-portabletext";
+import { getPosts } from "../../api/posts";
 
-export const prerender = true
+const posts = await getPosts();
+console.log("slug.astro:", posts);
+console.log("slug.astro - Slug param:", Astro.params.slug);
+const {slug} = Astro.params;
+const post = posts.find((post) => post.slug === slug);
 
-export async function getStaticPaths() {
-    const posts = await getPosts();
-    const paths = posts.map((post) => ({
-            params: {
-                slug: post.slug
-            },
-            props: {
-                title: post.title,
-                body: post.body,
-                image: post.image
-            }
-    }));
-    return paths;
+// if (!post) {
+//     return {
+//         status: 404,
+//         title: "Not Found",
+//         body: "Post not found"
+//     };
+// }
+
+if (!post) {
+    throw new Error("Post not found");
 }
-const {title, body} = Astro.props;
+
+const {title, description} = post;
 ---
 
 <MainLayout>
-  {title}
-  <PortableText value={body}
-  components={{
-    type:{
-        image: ({value}) => (
-            <img 
-            src={value.asset.url}
-            alt = {value.alt || "Blog Image"}
-            />
-        ),
-    },
-  }}
-  />
-</MainLayout> -->
+ <article>
+    <h1 >{post.title}</h1>
+    <p >{post.description}</p>
+ </article>
+</MainLayout>
